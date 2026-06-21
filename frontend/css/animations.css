@@ -1,0 +1,460 @@
+/* ===== KEYFRAMES ===== */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1); }
+}
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-40px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(252,128,25,0.4); }
+    50%       { transform: scale(1.08); box-shadow: 0 0 0 8px rgba(252,128,25,0); }
+}
+@keyframes shimmer {
+    0%   { background-position: -600px 0; }
+    100% { background-position: 600px 0; }
+}
+@keyframes bounce {
+    0%   { transform: translateY(0); }
+    20%  { transform: translateY(-18px); }
+    40%  { transform: translateY(0); }
+    60%  { transform: translateY(-10px); }
+    80%  { transform: translateY(0); }
+    100% { transform: translateY(0); }
+}
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+@keyframes cartPop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.5) rotate(-10deg); }
+    70%  { transform: scale(0.9) rotate(5deg); }
+    100% { transform: scale(1) rotate(0); }
+}
+@keyframes ripple {
+    0%   { transform: scale(0); opacity: 0.6; }
+    100% { transform: scale(4); opacity: 0; }
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-8px); }
+}
+@keyframes gradientShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+@keyframes typewriter {
+    from { width: 0; }
+    to   { width: 100%; }
+}
+@keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(252,128,25,0.3); }
+    50%       { box-shadow: 0 0 20px rgba(252,128,25,0.7), 0 0 40px rgba(252,128,25,0.3); }
+}
+@keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+}
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14%  { transform: scale(1.2); }
+    28%  { transform: scale(1); }
+    42%  { transform: scale(1.15); }
+    70%  { transform: scale(1); }
+}
+@keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    20%  { transform: rotate(-8deg); }
+    40%  { transform: rotate(8deg); }
+    60%  { transform: rotate(-4deg); }
+    80%  { transform: rotate(4deg); }
+}
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.5); }
+    to   { opacity: 1; transform: scale(1); }
+}
+@keyframes flipIn {
+    from { opacity: 0; transform: perspective(400px) rotateX(-90deg); }
+    to   { opacity: 1; transform: perspective(400px) rotateX(0); }
+}
+@keyframes neon {
+    0%, 100% { text-shadow: 0 0 4px #fc8019, 0 0 10px #fc8019; }
+    50%       { text-shadow: 0 0 8px #fc8019, 0 0 20px #fc8019, 0 0 40px #fc8019; }
+}
+
+/* ===== PAGE ===== */
+body { animation: fadeIn 0.4s ease; }
+
+/* ===== NAVBAR ===== */
+.navbar { animation: fadeInDown 0.5s cubic-bezier(0.4,0,0.2,1); }
+.navbar .logo { transition: transform 0.3s ease; }
+.navbar .logo:hover { transform: scale(1.1) rotate(-2deg); animation: neon 1.5s infinite; }
+.navbar .nav-links li { animation: fadeInDown 0.5s ease both; }
+.navbar .nav-links li:nth-child(1) { animation-delay: 0.1s; }
+.navbar .nav-links li:nth-child(2) { animation-delay: 0.2s; }
+.navbar .nav-links li:nth-child(3) { animation-delay: 0.3s; }
+.navbar .nav-links li:nth-child(4) { animation-delay: 0.4s; }
+
+/* ===== HERO ===== */
+.hero {
+    background-size: 300% 300%;
+    animation: gradientShift 6s ease infinite;
+    background-image: linear-gradient(135deg, #fc8019, #ff6b35, #e23744, #fc8019);
+}
+.hero h1 { animation: fadeInUp 0.8s cubic-bezier(0.4,0,0.2,1) both; }
+.hero p   { animation: fadeInUp 0.8s cubic-bezier(0.4,0,0.2,1) 0.15s both; }
+.search-bar { animation: fadeInUp 0.8s cubic-bezier(0.4,0,0.2,1) 0.3s both; }
+.search-bar:focus-within {
+    animation: glowPulse 1.5s ease infinite;
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
+}
+
+/* ===== CAROUSEL ===== */
+.carousel-slide { transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); }
+.slide-emoji { animation: float 3s ease-in-out infinite; }
+.carousel-btn { transition: all 0.2s ease; }
+.carousel-btn:hover { transform: translateY(-50%) scale(1.15); background: rgba(255,255,255,0.5) !important; }
+.dot { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+
+/* ===== OFFERS ===== */
+.offer-card {
+    animation: fadeInUp 0.5s ease both;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    overflow: hidden;
+}
+.offer-card:nth-child(1) { animation-delay: 0.05s; }
+.offer-card:nth-child(2) { animation-delay: 0.1s; }
+.offer-card:nth-child(3) { animation-delay: 0.15s; }
+.offer-card:nth-child(4) { animation-delay: 0.2s; }
+.offer-card:nth-child(5) { animation-delay: 0.25s; }
+.offer-card:nth-child(6) { animation-delay: 0.3s; }
+.offer-card:hover { transform: translateY(-4px) scale(1.02); }
+.offer-card:hover .offer-icon { animation: wiggle 0.5s ease; }
+.offer-icon { display: inline-block; transition: transform 0.3s ease; font-size: 32px; }
+
+/* Ripple on offer card click */
+.offer-card::after {
+    content: '';
+    position: absolute;
+    width: 20px; height: 20px;
+    background: rgba(252,128,25,0.3);
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    transform: scale(0);
+    pointer-events: none;
+}
+.offer-card:active::after { animation: ripple 0.5s ease; }
+
+/* ===== CUISINE CARDS ===== */
+.cuisine-card {
+    animation: zoomIn 0.4s ease both;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    overflow: hidden;
+}
+.cuisine-card:nth-child(1) { animation-delay: 0.05s; }
+.cuisine-card:nth-child(2) { animation-delay: 0.1s; }
+.cuisine-card:nth-child(3) { animation-delay: 0.15s; }
+.cuisine-card:nth-child(4) { animation-delay: 0.2s; }
+.cuisine-card:nth-child(5) { animation-delay: 0.25s; }
+.cuisine-card:nth-child(6) { animation-delay: 0.3s; }
+.cuisine-card:nth-child(7) { animation-delay: 0.35s; }
+.cuisine-card:nth-child(8) { animation-delay: 0.4s; }
+.cuisine-card:hover { transform: translateY(-6px) scale(1.05); }
+.cuisine-emoji {
+    font-size: 36px;
+    margin-bottom: 8px;
+    display: block;
+    transition: transform 0.3s ease;
+}
+.cuisine-card:hover .cuisine-emoji { animation: bounce 0.8s ease; }
+
+/* ===== FILTER CHIPS ===== */
+.filters { animation: fadeInUp 0.5s ease 0.1s both; }
+.filter-chip {
+    transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    overflow: hidden;
+}
+.filter-chip::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.2);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+.filter-chip:hover::after { transform: translateX(100%); }
+.filter-chip:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(252,128,25,0.3); }
+.filter-chip.active { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(252,128,25,0.35); }
+
+/* ===== SECTION TITLE ===== */
+.section-title { animation: slideInLeft 0.6s cubic-bezier(0.4,0,0.2,1) both; }
+
+/* ===== RESTAURANT CARDS ===== */
+.restaurant-card {
+    animation: fadeInUp 0.5s cubic-bezier(0.4,0,0.2,1) both;
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+.restaurant-card:nth-child(1)  { animation-delay: 0.05s; }
+.restaurant-card:nth-child(2)  { animation-delay: 0.1s; }
+.restaurant-card:nth-child(3)  { animation-delay: 0.15s; }
+.restaurant-card:nth-child(4)  { animation-delay: 0.2s; }
+.restaurant-card:nth-child(5)  { animation-delay: 0.25s; }
+.restaurant-card:nth-child(6)  { animation-delay: 0.3s; }
+.restaurant-card:nth-child(7)  { animation-delay: 0.35s; }
+.restaurant-card:nth-child(8)  { animation-delay: 0.4s; }
+.restaurant-card:nth-child(9)  { animation-delay: 0.45s; }
+.restaurant-card:nth-child(10) { animation-delay: 0.5s; }
+.restaurant-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 48px rgba(0,0,0,0.15);
+}
+.restaurant-card img { transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
+.restaurant-card:hover img { transform: scale(1.1); }
+.card-badge { animation: flipIn 0.5s ease both; }
+.rating { animation: zoomIn 0.3s ease both; transition: transform 0.2s; }
+.restaurant-card:hover .rating { transform: scale(1.1); }
+
+/* ===== SKELETON ===== */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 600px 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 8px;
+}
+.skeleton-card { background: var(--card-bg); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.skeleton-img  { width: 100%; height: 180px; border-radius: 0; }
+.skeleton-line { height: 14px; margin: 12px 16px 8px; }
+.skeleton-line.short  { width: 55%; }
+.skeleton-line.medium { width: 80%; }
+
+/* ===== MENU ITEMS ===== */
+.menu-item {
+    animation: slideInLeft 0.4s cubic-bezier(0.4,0,0.2,1) both;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.menu-item:nth-child(1) { animation-delay: 0.05s; }
+.menu-item:nth-child(2) { animation-delay: 0.1s; }
+.menu-item:nth-child(3) { animation-delay: 0.15s; }
+.menu-item:nth-child(4) { animation-delay: 0.2s; }
+.menu-item:nth-child(5) { animation-delay: 0.25s; }
+.menu-item:hover { transform: translateX(6px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+.menu-item img { transition: transform 0.4s ease; border-radius: 10px; }
+.menu-item:hover img { transform: scale(1.06) rotate(1deg); }
+
+.add-btn {
+    transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    overflow: hidden;
+}
+.add-btn:hover { transform: scale(1.1); box-shadow: 0 4px 12px rgba(72,196,121,0.4); }
+.add-btn:active { transform: scale(0.93); }
+
+.qty-control button {
+    transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+.qty-control button:hover  { transform: scale(1.2) rotate(5deg); }
+.qty-control button:active { transform: scale(0.85); }
+
+/* ===== RESTAURANT HEADER ===== */
+.restaurant-header { animation: fadeInDown 0.6s cubic-bezier(0.4,0,0.2,1); }
+.restaurant-header img {
+    transition: transform 0.4s ease;
+    animation: zoomIn 0.5s ease both;
+}
+.restaurant-header img:hover { transform: scale(1.05) rotate(1deg); }
+.restaurant-header-info h1 { animation: slideInRight 0.5s ease 0.1s both; }
+.restaurant-header-info .cuisine { animation: slideInRight 0.5s ease 0.2s both; }
+.restaurant-header-info .meta { animation: slideInRight 0.5s ease 0.3s both; }
+
+/* ===== CATEGORY SIDEBAR ===== */
+.category-sidebar { animation: slideInLeft 0.5s cubic-bezier(0.4,0,0.2,1); }
+.category-item {
+    transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+}
+.category-item:hover { transform: translateX(6px); }
+.category-item.active { transform: translateX(4px); }
+
+/* ===== FLOATING CART ===== */
+.floating-cart.visible {
+    animation: slideUp 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.floating-cart {
+    transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s ease;
+}
+.floating-cart:hover {
+    transform: translateX(-50%) translateY(-4px) scale(1.03) !important;
+    box-shadow: 0 16px 48px rgba(252,128,25,0.5);
+    animation: glowPulse 1.5s infinite;
+}
+
+/* ===== CART BADGE ===== */
+.cart-badge.pop { animation: cartPop 0.4s cubic-bezier(0.4,0,0.2,1); }
+
+/* ===== CART ITEMS ===== */
+.cart-item {
+    animation: slideInLeft 0.3s ease both;
+    transition: all 0.2s ease;
+}
+.cart-item:nth-child(1) { animation-delay: 0.05s; }
+.cart-item:nth-child(2) { animation-delay: 0.1s; }
+.cart-item:nth-child(3) { animation-delay: 0.15s; }
+.cart-item:hover { background: var(--light-gray); border-radius: 10px; transform: translateX(4px); }
+.cart-qty-control button {
+    transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+.cart-qty-control button:hover  { transform: scale(1.25) rotate(5deg); }
+.cart-qty-control button:active { transform: scale(0.85); }
+
+/* ===== ORDER CONFIRMATION ===== */
+.success-icon { animation: bounce 1.2s cubic-bezier(0.4,0,0.2,1); }
+.order-card {
+    animation: fadeInUp 0.5s cubic-bezier(0.4,0,0.2,1) both;
+}
+.order-card:nth-child(1) { animation-delay: 0.1s; }
+.order-card:nth-child(2) { animation-delay: 0.2s; }
+.order-card:nth-child(3) { animation-delay: 0.3s; }
+.order-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* ===== TRACKING STEPPER ===== */
+.step-circle {
+    transition: background 0.5s ease, box-shadow 0.5s ease, transform 0.3s ease;
+}
+.step.active .step-circle { animation: pulse 1.5s ease infinite; }
+.step.done .step-circle { animation: zoomIn 0.4s ease; }
+.step-line { transition: background 0.8s ease; }
+
+/* ===== BUTTONS ===== */
+.btn-primary {
+    transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    overflow: hidden;
+}
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.15);
+    transform: translateX(-100%) skewX(-15deg);
+    transition: transform 0.4s ease;
+}
+.btn-primary:hover::after { transform: translateX(100%) skewX(-15deg); }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(252,128,25,0.4); }
+.btn-primary:active { transform: translateY(0) scale(0.97); }
+
+/* ===== PAYMENT MODAL ===== */
+.payment-modal { animation: scaleIn 0.35s cubic-bezier(0.4,0,0.2,1); }
+.pay-method {
+    transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+.pay-method:hover { transform: translateY(-3px) scale(1.03); }
+.pay-method.active { animation: zoomIn 0.3s ease; }
+.pm-icon { transition: transform 0.3s ease; }
+.pay-method:hover .pm-icon { animation: wiggle 0.5s ease; }
+.upi-app { transition: all 0.25s ease; }
+.upi-app:hover { transform: translateY(-3px) scale(1.05); }
+.pay-btn {
+    transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    overflow: hidden;
+}
+.pay-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.15);
+    transform: translateX(-100%) skewX(-15deg);
+    transition: transform 0.4s ease;
+}
+.pay-btn:hover::after { transform: translateX(100%) skewX(-15deg); }
+.pay-btn:hover { transform: translateY(-3px); }
+
+/* ===== DARK TOGGLE ===== */
+.dark-toggle {
+    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.dark-toggle:hover {
+    transform: rotate(30deg) scale(1.2);
+    animation: heartbeat 0.8s ease;
+}
+
+/* ===== LOGIN PAGE ===== */
+.auth-container { animation: scaleIn 0.45s cubic-bezier(0.4,0,0.2,1); }
+.tab { transition: all 0.25s ease; }
+.tab:hover { transform: translateY(-1px); }
+.submit-btn {
+    transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    overflow: hidden;
+}
+.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(252,128,25,0.4); }
+.submit-btn:active { transform: scale(0.97); }
+
+/* ===== FOOTER ===== */
+.footer { animation: fadeInUp 0.5s ease both; }
+.footer-links a {
+    transition: all 0.2s ease;
+    position: relative;
+}
+.footer-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 0; height: 2px;
+    background: var(--orange);
+    transition: width 0.3s ease;
+}
+.footer-links a:hover::after { width: 100%; }
+.footer-links a:hover { transform: translateY(-2px); }
+
+/* ===== SPINNER ===== */
+.spinner {
+    width: 40px; height: 40px;
+    border: 4px solid var(--border);
+    border-top-color: var(--orange);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 40px auto;
+}
+
+/* ===== SCROLL REVEAL (JS triggered) ===== */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .restaurant-card:hover { transform: translateY(-4px) scale(1.01); }
+    .menu-item:hover { transform: translateX(3px); }
+}

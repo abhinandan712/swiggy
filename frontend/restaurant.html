@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant - Swiggy Clone</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/restaurant.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo" onclick="window.location.href='/'" style="cursor:pointer">swiggy<span>.</span></div>
+        <ul class="nav-links">
+            <li><a href="/">← Back</a></li>
+            <li><a href="/cart.html">
+                <div class="cart-icon">🛒
+                    <span class="cart-badge" id="cart-badge" style="display:none">0</span>
+                </div>
+            </a></li>
+            <li><button class="dark-toggle" onclick="toggleDark()">🌙</button></li>
+        </ul>
+    </nav>
+
+    <div class="restaurant-header" id="restaurant-header">
+        <div class="loader">Loading...</div>
+    </div>
+
+    <div class="menu-container">
+        <div class="category-sidebar" id="category-sidebar"></div>
+        <div>
+            <div id="menu-content"><div class="loader">Loading menu...</div></div>
+            <div id="reviews-section" style="margin-top:32px"></div>
+        </div>
+    </div>
+
+    <div class="floating-cart" id="floating-cart" onclick="window.location.href='/cart.html'"></div>
+
+    <script src="js/restaurant.js"></script>
+    <script>
+        if (localStorage.getItem('dark') === 'true') document.body.classList.add('dark');
+        function toggleDark() {
+            document.body.classList.toggle('dark');
+            localStorage.setItem('dark', document.body.classList.contains('dark'));
+            document.querySelector('.dark-toggle').textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+        }
+        if (localStorage.getItem('dark') === 'true') document.querySelector('.dark-toggle').textContent = '☀️';
+    </script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Placed - Swiggy Clone</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+        body { background: var(--bg); }
+        .order-confirmation { max-width: 600px; margin: 40px auto; padding: 0 20px; }
+        .success-icon { font-size: 80px; text-align: center; margin-bottom: 16px; animation: bounce 0.8s ease; }
+        @keyframes bounce { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
+        .order-card { background: var(--card-bg); border-radius: 16px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .order-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+        .order-card p { color: var(--gray); font-size: 14px; }
+        .order-id { font-size: 22px; font-weight: 800; color: var(--orange); }
+
+        /* Tracking stepper */
+        .tracking-title { font-size: 16px; font-weight: 700; margin-bottom: 20px; color: var(--text); }
+        .stepper { display: flex; align-items: flex-start; gap: 0; margin-bottom: 8px; }
+        .step { display: flex; flex-direction: column; align-items: center; flex: 1; }
+        .step-circle {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: var(--border); color: var(--gray);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; font-weight: 700; transition: all 0.4s; z-index: 1;
+        }
+        .step.done .step-circle { background: var(--green); color: white; }
+        .step.active .step-circle { background: var(--orange); color: white; box-shadow: 0 0 0 4px rgba(252,128,25,0.2); }
+        .step-label { font-size: 11px; text-align: center; margin-top: 6px; color: var(--gray); font-weight: 500; }
+        .step.done .step-label, .step.active .step-label { color: var(--text); font-weight: 600; }
+        .step-line { flex: 1; height: 3px; background: var(--border); margin-top: 17px; transition: background 0.4s; }
+        .step-line.done { background: var(--green); }
+
+        /* Order items */
+        .order-item-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text); }
+        .order-item-row:last-child { border-bottom: none; }
+        .order-total { font-weight: 700; font-size: 16px; }
+
+        /* Review */
+        .stars { display: flex; gap: 6px; margin-bottom: 12px; }
+        .star { font-size: 28px; cursor: pointer; transition: transform 0.1s; }
+        .star:hover { transform: scale(1.2); }
+        .review-input { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; outline: none; background: var(--bg); color: var(--text); margin-bottom: 12px; }
+        .review-input:focus { border-color: var(--orange); }
+        .review-submitted { color: var(--green); font-weight: 600; display: none; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer">swiggy<span>.</span></div>
+    </nav>
+
+    <div class="order-confirmation" id="order-content">
+        <div class="loader">Loading order details...</div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        if (localStorage.getItem('dark') === 'true') document.body.classList.add('dark');
+
+        const orderId = new URLSearchParams(window.location.search).get('id');
+        let selectedRating = 5;
+        let restaurantId = null;
+
+        const STATUSES = ['Placed', 'Confirmed', 'Preparing', 'Out for Delivery', 'Delivered'];
+        const STATUS_ICONS = ['📋', '✅', '👨‍🍳', '🛵', '🎉'];
+
+        async function loadOrder() {
+            const content = document.getElementById('order-content');
+            try {
+                const data = await api.getOrder(orderId);
+                const o = data.order;
+                restaurantId = data.items[0] ? 1 : null;
+
+                content.innerHTML = `
+                    <div class="success-icon">🎉</div>
+                    <div class="order-card" style="text-align:center">
+                        <h2>Order Placed Successfully!</h2>
+                        <p>Hey <strong>${o.customer_name}</strong>, your food is on its way!</p>
+                        <p style="margin-top:8px">Order ID: <span class="order-id">#${o.id}</span></p>
+                        <p style="margin-top:6px;font-size:13px;">📍 Delivering to: <strong>${o.address}</strong></p>
+                    </div>
+
+                    <div class="order-card">
+                        <p class="tracking-title">🛵 Live Order Tracking</p>
+                        <div id="stepper"></div>
+                        <p id="tracking-status" style="text-align:center;margin-top:12px;font-size:13px;color:var(--gray)"></p>
+                    </div>
+
+                    <div class="order-card">
+                        <p class="tracking-title">📋 Order Summary</p>
+                        ${data.items.map(i => `
+                            <div class="order-item-row">
+                                <span>${i.item_name} × ${i.quantity}</span>
+                                <span>₹${i.price * i.quantity}</span>
+                            </div>
+                        `).join('')}
+                        <div class="order-item-row order-total">
+                            <span>Total</span><span>₹${o.total}</span>
+                        </div>
+                    </div>
+
+                    <div class="order-card" id="review-card">
+                        <p class="tracking-title">⭐ Rate Your Experience</p>
+                        <div class="stars" id="stars">
+                            ${[1,2,3,4,5].map(n => `<span class="star" data-val="${n}" onclick="setRating(${n})">⭐</span>`).join('')}
+                        </div>
+                        <textarea class="review-input" id="review-comment" rows="3" placeholder="Tell us about your experience..."></textarea>
+                        <button class="btn-primary" onclick="submitReview()">Submit Review</button>
+                        <p class="review-submitted" id="review-submitted">✅ Thanks for your review!</p>
+                    </div>
+
+                    <div style="text-align:center;margin-bottom:40px">
+                        <button class="btn-primary" onclick="window.location.href='index.html'">Order More Food 🍔</button>
+                    </div>
+                `;
+
+                updateStepper(o.status);
+                await api.startTracking(orderId);
+                pollTracking();
+            } catch {
+                content.innerHTML = '<div class="no-results">Could not load order details.</div>';
+            }
+        }
+
+        function updateStepper(currentStatus) {
+            const currentStep = STATUSES.indexOf(currentStatus);
+            const stepper = document.getElementById('stepper');
+            let html = '<div class="stepper">';
+            STATUSES.forEach((s, i) => {
+                const isDone = i < currentStep;
+                const isActive = i === currentStep;
+                html += `<div class="step ${isDone ? 'done' : ''} ${isActive ? 'active' : ''}">
+                    <div class="step-circle">${isDone ? '✓' : STATUS_ICONS[i]}</div>
+                    <div class="step-label">${s}</div>
+                </div>`;
+                if (i < STATUSES.length - 1) {
+                    html += `<div class="step-line ${isDone ? 'done' : ''}"></div>`;
+                }
+            });
+            html += '</div>';
+            stepper.innerHTML = html;
+            document.getElementById('tracking-status').textContent =
+                currentStatus === 'Delivered' ? '✅ Order delivered! Enjoy your meal!' : `Status updates every 30 seconds...`;
+        }
+
+        function pollTracking() {
+            const interval = setInterval(async () => {
+                const data = await api.trackOrder(orderId);
+                updateStepper(data.status);
+                if (data.status === 'Delivered') clearInterval(interval);
+            }, 5000);
+        }
+
+        function setRating(val) {
+            selectedRating = val;
+            document.querySelectorAll('.star').forEach((s, i) => {
+                s.textContent = i < val ? '⭐' : '☆';
+            });
+        }
+
+        async function submitReview() {
+            const comment = document.getElementById('review-comment').value.trim();
+            if (!comment) return alert('Please write a review.');
+            const user = auth.getUser();
+            await api.addReview(1, {
+                user_name: user ? user.name : 'Anonymous',
+                rating: selectedRating,
+                comment
+            });
+            document.getElementById('review-submitted').style.display = 'block';
+            document.querySelector('#review-card .btn-primary').style.display = 'none';
+            document.getElementById('review-comment').disabled = true;
+        }
+
+        if (orderId) loadOrder();
+        else window.location.href = 'index.html';
+    </script>
+</body>
+</html>
